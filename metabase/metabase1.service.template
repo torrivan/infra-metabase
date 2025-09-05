@@ -1,0 +1,21 @@
+[Unit]
+Description=Metabase Instance 1
+After=syslog.target network.target
+
+[Service]
+WorkingDirectory=/opt/metabase/instance1
+Environment=MB_DB_TYPE=mysql
+Environment=MB_DB_HOST={{ MYSQL_HOST_IP }}
+Environment=MB_DB_PORT=3306
+Environment=MB_DB_DBNAME={{ MYSQL_DB_NAME }}
+Environment=MB_DB_USER={{ MYSQL_USER }}
+Environment=MB_DB_PASS={{ MYSQL_PASSWORD }}
+ExecStart=/usr/bin/java -Xmx2g -jar metabase.jar --port 3000
+User={{ METABASE_SYSTEM_USER }}
+Group={{ METABASE_SYSTEM_GROUP }}
+Type=simple
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
